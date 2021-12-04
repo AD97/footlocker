@@ -2,6 +2,7 @@ package com.wilbursandwilma.footlocker.model;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
+import java.sql.Timestamp;
 
 public class Member {
 
