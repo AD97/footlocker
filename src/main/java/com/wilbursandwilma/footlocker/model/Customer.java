@@ -7,6 +7,8 @@ public class Customer {
     private String phoneNo;
     private Character gender;
     private String fName;
+    private String mInitial;
+    private String lName;
 
     public String getCustID() {
         return custID;
@@ -72,11 +74,8 @@ public class Customer {
         this.lName = lName;
     }
 
-    private String mInitial;
-    private String lName;
-    public Customer (){
+    public Customer (){}
 
-    }
     public Customer(String custID, String dob, String email, String phoneNo, Character gender, String fName, String mInitial, String lName){
         this.custID = custID;
         this.dob = dob;

@@ -1,6 +1,7 @@
 package com.wilbursandwilma.footlocker.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,22 +30,69 @@ public class CustomerController {
     CustomerService customerService;
 
     @GetMapping("/customers")
-    public ResponseEntity<List<Customer>> getAllcustomers(@RequestParam(required = false) String title) {
+    public ResponseEntity<List<Customer>> getAllcustomers() {
         try {
             List<Customer> customers = new ArrayList<Customer>();
-
-            if (title == null)
                 customerService.findAll().forEach(customers::add);
-            else
-                customerService.findByTitleContaining(title).forEach(customers::add);
-
             if (customers.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
-
             return new ResponseEntity<>(customers, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/customers/id")
+    public ResponseEntity<List<Customer>> getCustomerById(@RequestParam(required = false) String id) {
+        Customer customer = customerService.findById(id);
+
+        if (customer != null) {
+            return new ResponseEntity(customer, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+    @GetMapping("/customers/email")
+    public ResponseEntity<List<Customer>> getCustomerByEmail(@RequestParam(required = false) String email) {
+            Customer customer = customerService.findByEmail(email);
+
+        if (customer != null) {
+            return new ResponseEntity(customer, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/customers/phone")
+    public ResponseEntity<List<Customer>> getCustomerByPhone(@RequestParam(required = false) String phoneno) {
+        Customer customer = customerService.findByPhone(phoneno);
+        System.out.println(customer);
+        if (customer != null) {
+            return new ResponseEntity(customer, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+    @GetMapping("/customers/fname")
+    public ResponseEntity<List<Customer>> getCustomerByName(@RequestParam(required = false) String fname) {
+        List<Customer> customer = customerService.findByName(fname);
+
+        if (customer != null) {
+            return new ResponseEntity(customer, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/customers/dob")
+    public ResponseEntity<List<Customer>> getCustomerByDob(@RequestParam(required = false) Date dob) {
+        List<Customer> customer = customerService.findByDob(dob);
+
+        if (customer != null) {
+            return new ResponseEntity(customer, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 }
