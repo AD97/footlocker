@@ -24,19 +24,9 @@ public class ItemTypeService {
                 new Object[] { });
     }
 
-    public ItemType findById(String id) {
-        try {
-            ItemType Item = jdbcTemplate.queryForObject("SELECT * FROM Items WHERE id=?",
-                    BeanPropertyRowMapper.newInstance(ItemType.class), id);
-
-            return Item;
-        } catch (IncorrectResultSizeDataAccessException e) {
-            return null;
-        }
-    }
 
     public List<ItemType> findAll() {
-        return jdbcTemplate.query("SELECT * from Items", BeanPropertyRowMapper.newInstance(ItemType.class));
+        return jdbcTemplate.query("SELECT * from Item_Type", BeanPropertyRowMapper.newInstance(ItemType.class));
     }
 
 
@@ -46,7 +36,7 @@ public class ItemTypeService {
 
     public List<ItemType> findByModelNo(String modelno){
         try{
-            return jdbcTemplate.query("SELECT * from Items WHERE lower(modelno) like ?",
+            return jdbcTemplate.query("SELECT * from Item_Type WHERE lower(modelno) like ?",
                     BeanPropertyRowMapper.newInstance(ItemType.class), modelno);
         } catch (IncorrectResultSizeDataAccessException e) {
             return null;

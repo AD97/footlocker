@@ -43,28 +43,14 @@ public class ItemTypeController {
         }
     }
 
-    @GetMapping("/items/id")
-    public ResponseEntity<List<ItemType>> getItemById(@RequestParam(required = false) String id) {
-        ItemType item = itemTypeService.findById(id);
+    @GetMapping("/itemtypes/model")
+    public ResponseEntity<List<ItemType>> getItemById(@RequestParam(required = false) String modelno) {
+        List<ItemType> item = itemTypeService.findByModelNo(modelno);
 
         if (item != null) {
             return new ResponseEntity(item, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
-
-    @GetMapping("/items/supplierid")
-    public ResponseEntity<List<ItemType>> getAllItemsBySupplier(@RequestParam(required = false) String supplierId) {
-        try {
-            List<ItemType> items = new ArrayList<ItemType>();
-            itemTypeService.findItemsFromSupplier(supplierId);
-            if (items.isEmpty()) {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-            return new ResponseEntity<>(items, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
