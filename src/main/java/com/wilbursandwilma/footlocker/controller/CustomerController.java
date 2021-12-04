@@ -33,7 +33,7 @@ public class CustomerController {
         try {
             List<Customer> customers = new ArrayList<Customer>();
 
-            if (title == null)
+            if (title == null )
                 customerService.findAll().forEach(customers::add);
             else
                 customerService.findByTitleContaining(title).forEach(customers::add);
