@@ -1,13 +1,34 @@
 package com.wilbursandwilma.footlocker.model;
 
-public class Customer {
+import javax.persistence.*;
+import java.io.Serializable;
+
+@Entity
+@Table(name = "customers")
+public class Customer implements Serializable {
+    @Id
+    @Column(name = "custID")
     private String custID;
+
+    @Column(name = "dob")
     private String dob;
+
+    @Column(name = "email")
     private String email;
+
+    @Column(name = "phoneNo")
     private String phoneNo;
+
+    @Column(name = "gender")
     private Character gender;
+
+    @Column(name = "fName")
     private String fName;
+
+    @Column(name = "mInitial")
     private String mInitial;
+
+    @Column(name = "lName")
     private String lName;
 
     public String getCustID() {

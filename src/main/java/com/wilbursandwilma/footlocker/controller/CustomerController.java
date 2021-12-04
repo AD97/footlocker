@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.wilbursandwilma.footlocker.model.Customer;
 import com.wilbursandwilma.footlocker.service.CustomerService;
 
-@CrossOrigin(origins = "http://localhost:8081")
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api")
 public class CustomerController {
@@ -93,6 +93,19 @@ public class CustomerController {
             return new ResponseEntity(customer, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PostMapping("/customers/create")
+    public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer){
+        System.out.println(customer.getDob());
+        try {
+            int cust = customerService
+                    .save(new Customer("", customer.getDob(), customer.getEmail(), customer.getPhoneNo(),
+                            customer.getGender(), customer.getfName(), customer.getmInitial(), customer.getlName()));
+            return new ResponseEntity(cust, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

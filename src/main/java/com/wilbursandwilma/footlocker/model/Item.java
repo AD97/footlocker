@@ -1,11 +1,20 @@
 package com.wilbursandwilma.footlocker.model;
 
+import javax.persistence.*;
 import java.sql.Timestamp;
 
+@Entity
+@Table(name = "items")
 public class Item {
+
+    @Id
+    @Column(name = "itemID")
     private String itemID;
+    @Column(name = "timestamp")
     private Timestamp timestamp;
+    @Column(name = "modelno")
     private String modelno;
+    @Column(name = "supplierID")
     private String supplierID;
 
     public String getItemID() {

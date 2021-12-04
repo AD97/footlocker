@@ -19,8 +19,8 @@ public class CustomerService {
 
 
     public int save(Customer Customer) {
-        return jdbcTemplate.update("INSERT INTO Customers (dob, email, phoneno, gender, fname, minitial, lname) VALUES(?,?,?,?,?,?,?)",
-                new Object[] { Customer.getDob(), Customer.getEmail(), Customer.getPhoneNo(),
+        return jdbcTemplate.update("INSERT INTO Customers (custId, dob, email, phoneno, gender, fname, minitial, lname) VALUES(?,?,?,?,?,?,?,?)",
+                new Object[] {"", Customer.getDob(), Customer.getEmail(), Customer.getPhoneNo(),
                         Customer.getGender(), Customer.getfName(), Customer.getmInitial(), Customer.getlName()});
     }
 
