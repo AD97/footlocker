@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import com.wilbursandwilma.footlocker.model.Item;
 
+@Repository
 public class ItemService {
     @Autowired
     private JdbcTemplate jdbcTemplate;
