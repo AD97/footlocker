@@ -1,5 +1,8 @@
 package com.wilbursandwilma.footlocker.model;
 
+import javax.persistence.*;
+import java.sql.Timestamp;
+
 public class CustomerOnlineSession {
     private Number numberOfClicks;
     private String sessionID;
