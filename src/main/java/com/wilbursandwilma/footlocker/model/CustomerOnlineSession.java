@@ -4,9 +4,15 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 public class CustomerOnlineSession {
-    private Number numberOfClicks;
+
+    @Id
+    @Column(name = "sessionID")
     private String sessionID;
+    @Column(name = "numberOfClicks")
+    private Number numberOfClicks;
+    @Column(name = "startTimeStamp")
     private Timestamp startTimeStamp;
+    @Column(name = "endTimeStamp")
     private Timestamp endTimeStamp;
 
     public java.lang.Number getNumberOfClicks() {

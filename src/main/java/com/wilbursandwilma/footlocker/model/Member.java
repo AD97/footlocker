@@ -1,10 +1,18 @@
 package com.wilbursandwilma.footlocker.model;
 
+import javax.persistence.Column;
+import javax.persistence.Id;
+
 public class Member {
 
+    @Id
+    @Column(name = "membershipID")
     private String membershipID;
+    @Column(name = "dateofAssociation")
     private Timestamp dateofAssociation;
+    @Column(name = "expiryDate")
     private String expiryDate;
+    @Column(name = "totPoints")
     private Number totPoints;
     
     public String getMembershipID() {
