@@ -24,10 +24,15 @@ public class CustomerService {
                 new Object[] {"", Customer.getDob(), Customer.getEmail(), Customer.getPhoneNo(),
                         Customer.getGender(), Customer.getfName(), Customer.getmInitial(), Customer.getlName()});
     }
-
+    public int update(Customer Customer) {
+        System.out.println(Customer.getfName());
+        return jdbcTemplate.update("UPDATE Customers SET dob=?, email=?, phoneno=?, gender=?, fname=?, minitial=?, lname=? WHERE CUSTID=?",
+                new Object[] { Customer.getDob(), Customer.getEmail(), Customer.getPhoneNo(),
+                        Customer.getGender(), Customer.getfName(), Customer.getmInitial(), Customer.getlName(), Customer.getCustID() });
+    }
     public Customer findById(String id) {
         try {
-            Customer Customer = jdbcTemplate.queryForObject("SELECT * FROM Customers WHERE id=?",
+            Customer Customer = jdbcTemplate.queryForObject("SELECT * FROM Customers WHERE custID=?",
                     BeanPropertyRowMapper.newInstance(Customer.class), id);
 
             return Customer;
@@ -37,8 +42,8 @@ public class CustomerService {
     }
 
 
-    public int deleteById(Long id) {
-        return jdbcTemplate.update("DELETE FROM Customers WHERE id=?", id);
+    public int deleteById(String id) {
+        return jdbcTemplate.update("DELETE FROM Customers WHERE CustID=?", id);
     }
 
     public List<Customer> findAll() {

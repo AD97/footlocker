@@ -8,11 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -96,6 +96,25 @@ public class CustomerController {
         }
     }
 
+    @PutMapping("/customers/update/{id}")
+    public ResponseEntity<Customer> updateCustomer(@PathVariable("id") String id, @RequestBody Customer customer){
+        Customer customerData = customerService.findById(id);
+        System.out.println("Hi there" + customerData);
+        if(customerData != null){
+            customerData.setCustID(id);
+            customerData.setDob(customer.getDob());
+            customerData.setEmail(customer.getEmail());
+            customerData.setfName(customer.getfName());
+            customerData.setmInitial(customer.getmInitial());
+            customerData.setlName(customer.getlName());
+            customerData.setGender(customer.getGender());
+            customerData.setPhoneNo(customer.getPhoneNo());
+            customerService.update(customerData);
+            return new ResponseEntity("Customer was updated successfully.", HttpStatus.OK);
+        } else {
+            return new ResponseEntity("Cannot find Tutorial with id=" + id, HttpStatus.NOT_FOUND);
+        }
+    }
     @PostMapping("/customers/create")
     public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer){
         System.out.println(customer.getDob());
@@ -106,6 +125,19 @@ public class CustomerController {
             return new ResponseEntity(cust, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @DeleteMapping("/customers/delete/{id}")
+    public ResponseEntity<String> deleteTutorial(@PathVariable("id") String id) {
+        try {
+            int result = customerService.deleteById(id);
+            if (result == 0) {
+                return new ResponseEntity<>("Cannot find Customer with id=" + id, HttpStatus.OK);
+            }
+            return new ResponseEntity<>("Tutorial was deleted successfully.", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Cannot delete Customer.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

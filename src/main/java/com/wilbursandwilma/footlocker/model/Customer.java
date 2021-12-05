@@ -1,17 +1,17 @@
 package com.wilbursandwilma.footlocker.model;
 
 import javax.persistence.*;
-import java.io.Serializable;
+import java.sql.Date;
 
 @Entity
 @Table(name = "customers")
-public class Customer implements Serializable {
+public class Customer{
     @Id
     @Column(name = "custID")
     private String custID;
 
     @Column(name = "dob")
-    private String dob;
+    private Date dob;
 
     @Column(name = "email")
     private String email;
@@ -39,11 +39,11 @@ public class Customer implements Serializable {
         this.custID = custID;
     }
 
-    public String getDob() {
+    public Date getDob() {
         return dob;
     }
 
-    public void setDob(String dob) {
+    public void setDob(Date dob) {
         this.dob = dob;
     }
 
@@ -97,7 +97,7 @@ public class Customer implements Serializable {
 
     public Customer (){}
 
-    public Customer(String custID, String dob, String email, String phoneNo, Character gender, String fName, String mInitial, String lName){
+    public Customer(String custID, Date dob, String email, String phoneNo, Character gender, String fName, String mInitial, String lName){
         this.custID = custID;
         this.dob = dob;
         this.email = email;
