@@ -1,6 +1,7 @@
 package com.wilbursandwilma.footlocker.service;
 
 import com.wilbursandwilma.footlocker.model.Customer;
+import com.wilbursandwilma.footlocker.model.ItemsInventory;
 import com.wilbursandwilma.footlocker.model.Shipments;
 import com.wilbursandwilma.footlocker.model.Warehouse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +17,11 @@ public class WarehouseService {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public List<Warehouse> findInventoryByWarehouseID(String id) {
+    public List<ItemsInventory> findInventoryByWarehouseID(String id) {
         try {
-            List<Warehouse> warehouse = jdbcTemplate.query("SELECT modelNo,availUnits,timestamp FROM ITEMS_INVENTORY WHERE warehouseID = ?",
-                    BeanPropertyRowMapper.newInstance(Warehouse.class), id);
-
-            return warehouse;
+            List<ItemsInventory> itemsInventories = jdbcTemplate.query("SELECT modelNo, warehouseid, timestamp, availUnits FROM ITEMS_INVENTORY WHERE warehouseid = ?",
+                    BeanPropertyRowMapper.newInstance(ItemsInventory.class), id);
+            return itemsInventories;
         } catch (IncorrectResultSizeDataAccessException e) {
             return null;
         }

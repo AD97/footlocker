@@ -3,6 +3,8 @@ package com.wilbursandwilma.footlocker.model;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import java.sql.Time;
+import java.sql.Timestamp;
 
 @IdClass(ItemsInventory.class)
 public class ItemsInventory {
@@ -15,7 +17,7 @@ public class ItemsInventory {
     private String warehouseID;
     @Id
     @Column(name = "timestamp")
-    private Number timestamp;
+    private Timestamp timestamp;
     @Column(name = "availUnits")
     private Number availUnits;
 
@@ -35,11 +37,11 @@ public class ItemsInventory {
         this.warehouseID = warehouseID;
     }
 
-    public Number getTimestamp() {
+    public Timestamp getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Number timestamp) {
+    public void setTimestamp(Timestamp timestamp) {
         this.timestamp = timestamp;
     }
 
