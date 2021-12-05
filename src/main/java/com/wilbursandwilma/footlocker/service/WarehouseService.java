@@ -7,9 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public class WarehouseService {
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -25,10 +27,10 @@ public class WarehouseService {
         }
     }
 
-    public List<Warehouse> findAllWarehouse(String id) {
+    public List<Warehouse> findAllWarehouse() {
         try {
             List<Warehouse> warehouse = jdbcTemplate.query("SELECT * from WAREHOUSE",
-                    BeanPropertyRowMapper.newInstance(Warehouse.class), id);
+                    BeanPropertyRowMapper.newInstance(Warehouse.class));
 
             return warehouse;
         } catch (IncorrectResultSizeDataAccessException e) {
