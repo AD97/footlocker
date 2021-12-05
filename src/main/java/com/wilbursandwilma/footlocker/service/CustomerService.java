@@ -3,6 +3,7 @@ package com.wilbursandwilma.footlocker.service;
 import java.util.Date;
 import java.util.List;
 
+import com.wilbursandwilma.footlocker.model.CustomerOnlineSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomMapEditor;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
@@ -73,11 +74,30 @@ public class CustomerService {
             return null;
         }
     }
+
     public List<Customer> findByName(String name){
         try{
             return jdbcTemplate.query("SELECT * from Customers WHERE lower(fname) like ?",
                     BeanPropertyRowMapper.newInstance(Customer.class), name);
         } catch (IncorrectResultSizeDataAccessException e) {
+            return null;
+        }
+    }
+
+    public List<CustomerOnlineSession> findbySessionCustID(String id){
+        try{
+            return jdbcTemplate.query("Select * from Customer_online_session where id = ?",
+                    BeanPropertyRowMapper.newInstance(CustomerOnlineSession.class), id);
+        } catch(IncorrectResultSizeDataAccessException e){
+            return null;
+        }
+    }
+
+    public List<CustomerOnlineSession> findAllSession(){
+        try{
+            return jdbcTemplate.query("Select * from Customer_online_session",
+                    BeanPropertyRowMapper.newInstance(CustomerOnlineSession.class));
+        } catch(IncorrectResultSizeDataAccessException e){
             return null;
         }
     }
