@@ -103,7 +103,7 @@ public class ItemController {
     public ResponseEntity<Customer> createCustomer(@RequestBody Item item){
         System.out.println(item.getModelno());
         try {
-            int items = itemService.save(new Item("", item.getModelno(), item.getSupplierID()));
+            int items = itemService.save(new Item(item.getItemID(), item.getModelno(), item.getSupplierID()));
             return new ResponseEntity(items, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

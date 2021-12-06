@@ -21,7 +21,7 @@ public class ItemService {
 
     public int save(Item Item) {
         return jdbcTemplate.update("INSERT INTO Items (itemID, modelno, supplierID) VALUES(?,?,?)",
-                new Object[] { "", Item.getModelno(), Item.getSupplierID()});
+                new Object[] {Item.getItemID(), Item.getModelno(), Item.getSupplierID()});
     }
 
     public int update(Item Item) {
