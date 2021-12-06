@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.wilbursandwilma.footlocker.model.ItemType;
 import com.wilbursandwilma.footlocker.service.ItemTypeService;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin
 @RestController
 @RequestMapping("/api")
 public class ItemTypeController {

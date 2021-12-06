@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.wilbursandwilma.footlocker.model.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.wilbursandwilma.footlocker.model.Item;
 import com.wilbursandwilma.footlocker.service.ItemService;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin
 @RestController
 @RequestMapping("/api")
 public class ItemController {
@@ -39,12 +40,14 @@ public class ItemController {
             }
             return new ResponseEntity<>(items, HttpStatus.OK);
         } catch (Exception e) {
+            System.out.println(e);
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @GetMapping("/items/id")
     public ResponseEntity<List<Item>> getItemById(@RequestParam(required = false) String id) {
+
         Item item = itemService.findById(id);
 
         if (item != null) {
@@ -54,17 +57,69 @@ public class ItemController {
         }
     }
 
-    @GetMapping("/items/supplierid")
+    @GetMapping("/items/model")
+    public ResponseEntity<List<Item>> getItemsByModel(@RequestParam(required = false) String modelNo) {
+
+        List<Item> items = new ArrayList<Item>();
+        items = itemService.findByModelNo(modelNo);
+        if (items != null) {
+            return new ResponseEntity(items, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/items/supplier")
     public ResponseEntity<List<Item>> getAllItemsBySupplier(@RequestParam(required = false) String supplierId) {
         try {
             List<Item> items = new ArrayList<Item>();
-            itemService.findItemsFromSupplier(supplierId);
+            items = itemService.findItemsFromSupplier(supplierId);
             if (items.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
             return new ResponseEntity<>(items, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping("/items/update/{id}")
+    public ResponseEntity<Item> updateCustomer(@PathVariable("id") String id, @RequestBody Item item){
+        System.out.println("Hi there" + item.getModelno());
+        Item itemData = itemService.findById(id);
+        if(itemData != null){
+            itemData.setItemID(id);
+            itemData.setModelno(item.getModelno());
+            itemData.setSupplierID(item.getSupplierID());
+            System.out.println("This is item id in controller" + itemData.getItemID());
+            itemService.update(itemData);
+            return new ResponseEntity("Item was updated successfully.", HttpStatus.OK);
+        } else {
+            return new ResponseEntity("Cannot find Item with id=" + id, HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PostMapping("/items/create")
+    public ResponseEntity<Customer> createCustomer(@RequestBody Item item){
+        System.out.println(item.getModelno());
+        try {
+            int items = itemService.save(new Item("", item.getModelno(), item.getSupplierID()));
+            return new ResponseEntity(items, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @DeleteMapping("/items/delete/{id}")
+    public ResponseEntity<String> deleteItem(@PathVariable("id") String itemId) {
+        try {
+            int result = itemService.deleteById(itemId);
+            if (result == 0) {
+                return new ResponseEntity<>("Cannot find Item with id=" + itemId, HttpStatus.OK);
+            }
+            return new ResponseEntity<>("Item was deleted successfully.", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Cannot delete Customer.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

@@ -25,7 +25,7 @@ import com.wilbursandwilma.footlocker.model.Shipments;
 import com.wilbursandwilma.footlocker.model.ItemsInventory;
 import com.wilbursandwilma.footlocker.service.WarehouseService;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin
 @RestController
 @RequestMapping("/api")
 public class WarehouseController {

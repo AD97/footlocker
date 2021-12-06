@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.wilbursandwilma.footlocker.model.Customer;
 import com.wilbursandwilma.footlocker.service.CustomerService;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin
 @RestController
 @RequestMapping("/api")
 public class CustomerController {
@@ -112,7 +112,7 @@ public class CustomerController {
             customerService.update(customerData);
             return new ResponseEntity("Customer was updated successfully.", HttpStatus.OK);
         } else {
-            return new ResponseEntity("Cannot find Tutorial with id=" + id, HttpStatus.NOT_FOUND);
+            return new ResponseEntity("Cannot find Customer with id=" + id, HttpStatus.NOT_FOUND);
         }
     }
     @PostMapping("/customers/create")
@@ -129,13 +129,13 @@ public class CustomerController {
     }
 
     @DeleteMapping("/customers/delete/{id}")
-    public ResponseEntity<String> deleteTutorial(@PathVariable("id") String id) {
+    public ResponseEntity<String> deleteCustomer(@PathVariable("id") String id) {
         try {
             int result = customerService.deleteById(id);
             if (result == 0) {
                 return new ResponseEntity<>("Cannot find Customer with id=" + id, HttpStatus.OK);
             }
-            return new ResponseEntity<>("Tutorial was deleted successfully.", HttpStatus.OK);
+            return new ResponseEntity<>("Customer was deleted successfully.", HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>("Cannot delete Customer.", HttpStatus.INTERNAL_SERVER_ERROR);
         }

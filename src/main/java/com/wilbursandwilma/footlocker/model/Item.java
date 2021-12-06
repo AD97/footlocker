@@ -1,6 +1,9 @@
 package com.wilbursandwilma.footlocker.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
+import java.sql.Date;
 import java.sql.Timestamp;
 
 @Entity
@@ -10,12 +13,12 @@ public class Item {
     @Id
     @Column(name = "itemID")
     private String itemID;
-    @Column(name = "timestamp")
-    private Timestamp timestamp;
     @Column(name = "modelno")
-    private String modelno;
+    private String modelNo;
     @Column(name = "supplierID")
     private String supplierID;
+
+
 
     public String getItemID() {
         return itemID;
@@ -25,20 +28,13 @@ public class Item {
         this.itemID = itemID;
     }
 
-    public Timestamp getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(Timestamp timestamp) {
-        this.timestamp = timestamp;
-    }
 
     public String getModelno() {
-        return modelno;
+        return modelNo;
     }
 
     public void setModelno(String modelno) {
-        this.modelno = modelno;
+        this.modelNo = modelno;
     }
 
     public String getSupplierID() {
@@ -48,4 +44,14 @@ public class Item {
     public void setSupplierID(String supplierID) {
         this.supplierID = supplierID;
     }
+
+    public Item (){}
+
+    public Item(String itemID, String modelno, String supplierID) {
+        this.itemID = itemID;
+        this.modelNo = modelno;
+        this.supplierID = supplierID;
+    }
+
+
 }

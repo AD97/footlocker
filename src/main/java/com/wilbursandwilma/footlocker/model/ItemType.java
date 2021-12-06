@@ -8,6 +8,15 @@ public class ItemType {
     private Number itemSize;
     private Number price;
     private String brandid;
+    private String modelName;
+
+    public String getModelName() {
+        return modelName;
+    }
+
+    public void setModelName(String modelName) {
+        this.modelName = modelName;
+    }
 
     public String getModelno() {
         return modelno;

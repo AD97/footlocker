@@ -20,13 +20,19 @@ public class ItemService {
 
 
     public int save(Item Item) {
-        return jdbcTemplate.update("INSERT INTO Items (timestamp, modelno, supplierID) VALUES(?,?,?)",
-                new Object[] { Item.getTimestamp(), Item.getModelno(), Item.getSupplierID()});
+        return jdbcTemplate.update("INSERT INTO Items (itemID, modelno, supplierID) VALUES(?,?,?)",
+                new Object[] { "", Item.getModelno(), Item.getSupplierID()});
+    }
+
+    public int update(Item Item) {
+        System.out.println("This is in service" + Item.getModelno());
+        return jdbcTemplate.update("UPDATE Items SET modelNo=?,supplierID=? WHERE itemID=?",
+                new Object[] {Item.getModelno(), Item.getSupplierID(), Item.getItemID()});
     }
 
     public Item findById(String id) {
         try {
-            Item Item = jdbcTemplate.queryForObject("SELECT * FROM Items WHERE id=?",
+            Item Item = jdbcTemplate.queryForObject("SELECT * FROM Items WHERE itemid=?",
                     BeanPropertyRowMapper.newInstance(Item.class), id);
 
             return Item;
@@ -53,7 +59,7 @@ public class ItemService {
         }
     }
 
-    public int deleteAll() {
-        return jdbcTemplate.update("DELETE from Items");
+    public int deleteById(String id) {
+        return jdbcTemplate.update("DELETE FROM Items WHERE itemid=?", id);
     }
 }
